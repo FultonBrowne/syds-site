@@ -1,9 +1,6 @@
 "use client";
 
 import ImageOverlay, { ImagesData } from "@/components/ImageOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const images: ImagesData[] = [
   {

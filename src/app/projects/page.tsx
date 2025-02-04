@@ -14,9 +14,8 @@ type Project = {
 const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description:
-      "A full-stack e-commerce platform built with Next.js and TypeScript",
+    title: "The Tempest",
+    description: "Im syd and I did cool stuff",
     images: [
       {
         id: "1-1",

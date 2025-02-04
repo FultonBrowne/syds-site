@@ -64,14 +64,7 @@ export default function ContactPage() {
           </div>
         </div>
         <div className="flex w-full lg:w-1/2 items-center justify-center">
-          <ImageOverlay
-            images={images}
-            containerSize={
-              typeof window !== "undefined" && window.innerWidth < 1024
-                ? Math.min(window.innerWidth - 32, 600)
-                : 600
-            }
-          />
+          <ImageOverlay images={images} />
         </div>
       </div>
     </main>

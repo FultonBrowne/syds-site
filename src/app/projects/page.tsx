@@ -126,32 +126,30 @@ export default function ProjectsPage() {
   const [activeProject, setActiveProject] = useState<number>(1);
 
   useEffect(() => {
-    // Create an Intersection Observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Extract the project ID from the section's ID
             const projectId = parseInt(entry.target.id.split("-")[1]);
             setActiveProject(projectId);
           }
         });
       },
       {
-        threshold: 0.5, // Trigger when 50% of the section is visible
+        threshold: 0.5,
       },
     );
-    // Observe all project sections
+
     projects.forEach((project) => {
       const element = document.getElementById(`project-${project.id}`);
       if (element) observer.observe(element);
     });
 
-    // Cleanup
     return () => observer.disconnect();
   }, []);
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="container min-w-full">
       {/* Navigation dots */}
       <div className="fixed left-0 top-1/2 translate-y-[-50%] z-50">
         {projects.map((project, index) => (
@@ -166,13 +164,12 @@ export default function ProjectsPage() {
           >
             <div
               className={`w-5 h-1 transition-all duration-100 ease-in
-                      ${
-                        activeProject === project.id
-                          ? "w-8 h-1 bg-primary"
-                          : "bg-primary group-hover:w-6 group-hover:h-1"
-                      }`}
+                ${
+                  activeProject === project.id
+                    ? "w-8 h-1 bg-primary"
+                    : "bg-primary group-hover:w-6 group-hover:h-1"
+                }`}
             />
-            {/* Tooltip on hover */}
             <div className="hidden group-hover:block ml-4 bg-gray-800 text-white px-2 py-1 rounded text-sm">
               {project.title}
             </div>
@@ -185,16 +182,15 @@ export default function ProjectsPage() {
         <section
           key={project.id}
           id={`project-${project.id}`}
-          className="min-h-screen flex items-center sticky"
+          className="flex min-h-screen justify-center w-1/2 md:w-full p-4 sm:p-8 md:p-20"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-            {/* Content */}
-            <div className="flex flex-col gap-4 justify-center order-2 md:order-1 px-4 md:px-0">
-              <h2 className="text-2xl md:text-3xl font-bold">
+          <div className="flex flex-col-reverse lg:flex-row justify-between w-full gap-8 lg:gap-4">
+            <div className="flex flex-col gap-4  justify-center">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
                 {project.title}
               </h2>
-              <p className="text-base md:text-lg">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-base sm:text-lg">{project.description}</p>
+              <div className="flex flex-wrap gap-2 mt-4">
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
@@ -205,16 +201,12 @@ export default function ProjectsPage() {
                 ))}
               </div>
             </div>
-
-            {/* Image Gallery */}
-            <div className="flex items-center justify-center order-1 md:order-2">
-              <div className="w-full md:w-auto">
-                <ImageOverlay images={project.images} />
-              </div>
+            <div className="flex w-full md:w-1/2 items-center justify-center">
+              <ImageOverlay images={project.images} />
             </div>
           </div>
         </section>
       ))}
-    </div>
+    </main>
   );
 }

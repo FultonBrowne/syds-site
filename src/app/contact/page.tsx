@@ -36,15 +36,15 @@ export default function ContactPage() {
             say hi, feel free to reach out!
           </div>
           <div className="flex gap-6 mt-4">
-            <a
-              href="mailto:your.email@example.com"
+            {/* <a
+              href="mailto:stolenmeadow@"
               className="text-2xl hover:text-gray-600 transition-colors"
               aria-label="Email"
             >
               <FontAwesomeIcon icon={faEnvelope} />
-            </a>
+            </a> */}
             <a
-              href="https://www.instagram.com/yourusername"
+              href="https://www.instagram.com/syd_mo27"
               target="_blank"
               rel="noopener noreferrer"
               className="text-2xl hover:text-gray-600 transition-colors"
@@ -52,7 +52,7 @@ export default function ContactPage() {
             >
               <FontAwesomeIcon icon={faInstagram} />
             </a>
-            <a
+            {/* <a
               href="https://www.linkedin.com/in/yourusername"
               target="_blank"
               rel="noopener noreferrer"
@@ -60,11 +60,11 @@ export default function ContactPage() {
               aria-label="LinkedIn"
             >
               <FontAwesomeIcon icon={faLinkedin} />
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="flex w-full lg:w-1/2 items-center justify-center">
-          <ImageOverlay images={images} />
+          {/* <ImageOverlay images={images} /> */}
         </div>
       </div>
     </main>

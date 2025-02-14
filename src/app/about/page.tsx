@@ -5,17 +5,17 @@ import ImageOverlay, { ImagesData } from "@/components/ImageOverlay";
 const images: ImagesData[] = [
   {
     id: "1",
-    src: "/image1.jpg",
+    src: "/about1.jpg",
     alt: "Image 1",
   },
   {
     id: "2",
-    src: "/image2.jpg",
+    src: "/about2.jpg",
     alt: "Image 2",
   },
   {
     id: "3",
-    src: "/image3.jpg",
+    src: "/about3.jpg",
     alt: "Image 3",
   },
 ];
@@ -29,7 +29,9 @@ export default function About() {
             More About me
           </div>
           <div className="text-base sm:text-lg">
-            I love dogs and my boyfriend (who made this website for me)
+            I love dogs, art, video games, and theater (obviously). I am
+            currently pursuing a degree in theater production design and
+            technology, but I have been a technician since 2018.
           </div>
         </div>
         <div className="flex w-full lg:w-1/2 items-center justify-center">

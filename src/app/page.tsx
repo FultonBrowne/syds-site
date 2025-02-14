@@ -32,7 +32,7 @@ export default function Home() {
             Hi I{"'"}m Syd
           </div>
           <div className="text-base sm:text-lg">
-            A stage manager, designer, and technician Samford University
+            A stage manager, designer, and technician at Samford University
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
             <Button

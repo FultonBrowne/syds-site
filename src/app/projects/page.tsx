@@ -167,7 +167,7 @@ export default function ProjectsPage() {
         <section
           key={project.id}
           id={`project-${project.id}`}
-          className="flex min-h-screen justify-center w-1/2 md:w-full p-4 sm:p-8 md:p-20"
+          className="flex min-h-screen justify-center lg:w-1/2 md:w-full p-4 sm:p-8 md:p-20"
         >
           <div className="flex flex-col-reverse lg:flex-row justify-between w-full gap-8 lg:gap-4">
             <div className="flex flex-col gap-4  justify-center">

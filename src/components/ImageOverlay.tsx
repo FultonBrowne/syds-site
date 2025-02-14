@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 
 export const REQUIRED_IMAGE_COUNT = 3 as const;
@@ -9,7 +9,7 @@ export type RequiredImageCount = typeof REQUIRED_IMAGE_COUNT;
 
 export type ImagesData = {
   id: string;
-  src: string;
+  src: string | StaticImageData;
   alt: string;
 };
 
@@ -20,16 +20,10 @@ interface ImageOverlayProps {
 
 const ImageOverlay = ({ images, className = "" }: ImageOverlayProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [mounted, setMounted] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [actualSize, setActualSize] = useState<number>(800);
 
   useEffect(() => {
-    setMounted(true);
     const handleResize = () => {
-      const newSize =
-        document?.getElementById("image-overlay")?.clientWidth || 800;
-      setActualSize(newSize);
       setIsMobile(window.innerWidth < 768);
     };
 
@@ -41,17 +35,9 @@ const ImageOverlay = ({ images, className = "" }: ImageOverlayProps) => {
     };
   }, []);
 
-  // Don't render anything until after mount
-  if (!mounted) {
-    return null;
-  }
-
   if (images.length !== 3) {
     throw new Error("ImageOverlay component requires exactly 3 images");
   }
-
-  const mainImageSize = actualSize * 0.5;
-  const smallImageSize = actualSize * 0.4;
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
@@ -67,8 +53,10 @@ const ImageOverlay = ({ images, className = "" }: ImageOverlayProps) => {
 
   if (isMobile) {
     return (
-      <div className={`relative ${className} w-full`} id="image-overlay">
-        {/* Rest of mobile JSX remains the same */}
+      <div
+        className={`relative w-full aspect-square ${className}`}
+        id="image-overlay"
+      >
         <button
           onClick={prevSlide}
           className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-white/80 p-2 rounded-full shadow-md"
@@ -94,17 +82,15 @@ const ImageOverlay = ({ images, className = "" }: ImageOverlayProps) => {
             {images.map((image, index) => (
               <div
                 key={image.id}
-                className="min-w-full h-full flex items-center justify-center aspect-square"
+                className="min-w-full h-full relative aspect-square"
               >
-                <div className="relative w-full h-full">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover"
-                    priority={index === 0}
-                  />
-                </div>
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                />
               </div>
             ))}
           </div>
@@ -132,54 +118,46 @@ const ImageOverlay = ({ images, className = "" }: ImageOverlayProps) => {
 
   return (
     <div
-      className={`relative ${className}`}
+      className={`relative aspect-square w-full max-w-[800px] ${className}`}
       id="image-overlay"
-      style={{
-        width: `${actualSize}px`,
-        height: `${actualSize}px`,
-      }}
     >
       {images.map((image, index) => {
-        let imageStyle = {};
+        let positionClass = "";
+        let sizeClass = "";
+        let zIndexClass = "";
 
         if (index === selectedIndex) {
-          imageStyle = {
-            width: `${mainImageSize}px`,
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 20,
-          };
+          positionClass = "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2";
+          sizeClass = "w-1/2";
+          zIndexClass = "z-20"; // Main image on top
         } else if (index === previousIndex) {
-          imageStyle = {
-            width: `${smallImageSize}px`,
-            left: "10%",
-            top: "10%",
-            opacity: 0.5,
-          };
+          positionClass = "left-[10%] top-[10%]";
+          sizeClass = "w-2/5";
+          zIndexClass = "z-10"; // Secondary images below
         } else if (index === nextIndex) {
-          imageStyle = {
-            width: `${smallImageSize}px`,
-            right: "10%",
-            bottom: "10%",
-            opacity: 0.5,
-          };
+          positionClass = "right-[10%] bottom-[10%]";
+          sizeClass = "w-2/5";
+          zIndexClass = "z-10"; // Secondary images below
         }
 
         return (
           <div
             key={image.id}
-            className="absolute transition-all duration-500 ease-in-out cursor-pointer"
-            style={imageStyle}
+            className={`absolute transition-all duration-500 ease-in-out cursor-pointer ${positionClass} ${sizeClass} ${zIndexClass}`}
             onClick={() => handleClick(index)}
           >
-            <div className="relative aspect-square bg-white rounded-lg">
+            <div className="relative aspect-square rounded-lg bg-white">
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
-                className="object-cover rounded-lg shadow-lg"
-                priority={index === 0}
+                loading="lazy"
+                className={`object-cover rounded-lg shadow-lg ${
+                  index !== selectedIndex ? "opacity-50" : ""
+                }`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRojHyAiIygnLSYxMC0sLTIxP0BOT09OP0E5PkpLUFNWWldaYVthZGhqc2diW2f/2wBDARUXFyMeIBshIVshZS8lL2VlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWX/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
               />
             </div>
           </div>

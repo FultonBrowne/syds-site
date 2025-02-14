@@ -4,20 +4,24 @@ import ImageOverlay, { ImagesData } from "@/components/ImageOverlay";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
+import image1 from "@/../public/about1.jpg"; // Adjust the path based on your image locations
+import image2 from "@/../public/about2.jpg";
+import image3 from "@/../public/about3.jpg";
+
 const images: ImagesData[] = [
   {
     id: "1",
-    src: "/image1.jpg",
+    src: image1,
     alt: "Image 1",
   },
   {
     id: "2",
-    src: "/image2.jpg",
+    src: image2,
     alt: "Image 2",
   },
   {
     id: "3",
-    src: "/image3.jpg",
+    src: image3,
     alt: "Image 3",
   },
 ];
@@ -27,7 +31,7 @@ export default function Home() {
   return (
     <main className="flex flex-col min-h-screen justify-center p-4 sm:p-8 md:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="flex flex-col-reverse lg:flex-row justify-between w-full gap-8 lg:gap-4">
-        <div className="flex flex-col gap-4 justify-center">
+        <div className="flex flex-col lg:w-1/2  gap-4 justify-center">
           <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
             Hi I{"'"}m Syd
           </div>

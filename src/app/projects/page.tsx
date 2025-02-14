@@ -167,10 +167,10 @@ export default function ProjectsPage() {
         <section
           key={project.id}
           id={`project-${project.id}`}
-          className="flex min-h-screen justify-center lg:w-1/2 md:w-full p-4 sm:p-8 md:p-20"
+          className="flex min-h-screen justify-center  md:w-full p-4 sm:p-8 md:p-20"
         >
           <div className="flex flex-col-reverse lg:flex-row justify-between w-full gap-8 lg:gap-4">
-            <div className="flex flex-col gap-4  justify-center">
+            <div className="flex flex-col gap-4 lg:w-1/2 justify-center">
               <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
                 {project.title}
               </h2>

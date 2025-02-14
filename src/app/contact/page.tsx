@@ -1,27 +1,26 @@
 "use client";
 
-import ImageOverlay, { ImagesData } from "@/components/ImageOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import {} from "@fortawesome/free-solid-svg-icons";
 
-const images: ImagesData[] = [
-  {
-    id: "1",
-    src: "/image1.jpg",
-    alt: "Image 1",
-  },
-  {
-    id: "2",
-    src: "/image2.jpg",
-    alt: "Image 2",
-  },
-  {
-    id: "3",
-    src: "/image3.jpg",
-    alt: "Image 3",
-  },
-];
+// const images: ImagesData[] = [
+//   {
+//     id: "1",
+//     src: "/image1.jpg",
+//     alt: "Image 1",
+//   },
+//   {
+//     id: "2",
+//     src: "/image2.jpg",
+//     alt: "Image 2",
+//   },
+//   {
+//     id: "3",
+//     src: "/image3.jpg",
+//     alt: "Image 3",
+//   },
+// ];
 
 export default function ContactPage() {
   return (

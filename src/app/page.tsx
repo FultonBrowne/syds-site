@@ -4,9 +4,9 @@ import ImageOverlay, { ImagesData } from "@/components/ImageOverlay";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-import image1 from "@/../public/about1.jpg"; // Adjust the path based on your image locations
-import image2 from "@/../public/about2.jpg";
-import image3 from "@/../public/about3.jpg";
+import image1 from "@/../public/image1.jpg";
+import image2 from "@/../public/image2.jpg";
+import image3 from "@/../public/image3.jpg";
 
 const images: ImagesData[] = [
   {
